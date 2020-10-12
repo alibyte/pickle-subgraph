@@ -4,12 +4,12 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: PickleStaking
+    name: staking
     network: mainnet
     source:
       address: "0xD86F33388BF0bfDF0cCb1ECB4A48a1579504DC0a"
-      abi: Staking
-      startBlock: 10980000
+      abi: StakingContract
+      startBlock: 10985000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -20,8 +20,8 @@ dataSources:
         - Staked
         - Withdrawn
       abis:
-        - name: Staking
-          file: ./abis/Staking.json
+        - name: StakingContract
+          file: ./abis/StakingContract.json
       eventHandlers:
         - event: RewardAdded(uint256)
           handler: handleRewardAdded
@@ -31,4 +31,4 @@ dataSources:
           handler: handleStaked
         - event: Withdrawn(indexed address,uint256)
           handler: handleWithdrawn
-      file: ./src/mapping.ts
+      file: ./src/staking.ts

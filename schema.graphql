@@ -4,8 +4,9 @@ type Account @entity {
   totalRewards: BigInt!
 }
 
-type Rewards @entity {
+type RewardContract @entity {
   id: ID!
   currentRewards: BigInt!
   totalRewards: BigInt!
+  stakedTokens: BigInt!
 }

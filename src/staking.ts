@@ -1,36 +1,29 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts"
 import {
-  Staking,
+  StakingContract,
   RewardAdded,
   RewardPaid,
   Staked,
   Withdrawn
-} from "../generated/PickleStaking/Staking"
-import { Account, Rewards } from "../generated/schema"
+} from "../generated/staking/StakingContract"
+import { Account, RewardContract } from "../generated/schema"
 
 // static values
-const ZERO = BigInt.fromI32(0);
+let ZERO = BigInt.fromI32(0);
 
 // contract definitions
-const stakingContractAddress = "0xD86F33388BF0bfDF0cCb1ECB4A48a1579504DC0a";
-const stakingContract = Staking.bind(Address.fromString(stakingContractAddress));
+let stakingContractAddress = "0xd86f33388bf0bfdf0ccb1ecb4a48a1579504dc0a";
+let stakingContract = StakingContract.bind(Address.fromString(stakingContractAddress));
 
 export function handleRewardAdded(event: RewardAdded): void {
-  let rewards = Rewards.load(stakingContractAddress);
-
-  if (rewards == null) {
-    rewards = new Rewards(stakingContractAddress);
-    rewards.currentRewards = BigInt.fromI32(0);
-    rewards.totalRewards = BigInt.fromI32(0);
-  }
-
+  let rewards = getRewards();
   rewards.currentRewards = rewards.currentRewards.plus(event.params.reward);
   rewards.totalRewards = rewards.totalRewards.plus(event.params.reward);
   rewards.save();
 }
 
 export function handleRewardPaid(event: RewardPaid): void {
-  let rewards = Rewards.load(stakingContractAddress);
+  let rewards = getRewards();
   rewards.currentRewards = rewards.currentRewards.minus(event.params.reward);
   rewards.save();
 
@@ -40,13 +33,14 @@ export function handleRewardPaid(event: RewardPaid): void {
 }
 
 export function handleStaked(event: Staked): void {
+  getRewards().save();
   getOrCreateAccount(event.params.user).save();
 }
 
 export function handleWithdrawn(event: Withdrawn): void {
+  getRewards().save();
   let account = getOrCreateAccount(event.params.user);
-  let earned = stakingContract.earned(event.params.user);
-  account.totalRewards = account.totalRewards.plus(earned);
+  account.totalRewards = stakingContract.earned(event.params.user).plus(account.totalRewards);
   account.save();
 }
 
@@ -60,4 +54,17 @@ function getOrCreateAccount(address: Address): Account {
 
   account.staked = stakingContract.balanceOf(address);
   return account as Account;
+}
+
+function getRewards(): RewardContract {
+  let rewards = RewardContract.load(stakingContractAddress);
+
+  if (rewards == null) {
+    rewards = new RewardContract(stakingContractAddress);
+    rewards.totalRewards = ZERO;
+    rewards.currentRewards = ZERO;
+  }
+
+  rewards.stakedTokens = stakingContract.totalSupply();
+  return rewards as RewardContract;
 }
