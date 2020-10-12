@@ -9,7 +9,7 @@ dataSources:
     source:
       address: "0xD86F33388BF0bfDF0cCb1ECB4A48a1579504DC0a"
       abi: Staking
-      startBlock: 10985000
+      startBlock: 10980000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
