@@ -1,0 +1,11 @@
+type Account @entity {
+  id: ID!
+  staked: BigInt!
+  totalRewards: BigInt!
+}
+
+type Rewards @entity {
+  id: ID!
+  currentRewards: BigInt!
+  totalRewards: BigInt!
+}

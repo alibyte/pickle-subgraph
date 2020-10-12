@@ -1,0 +1,34 @@
+specVersion: 0.0.2
+description: $PICKLE Token Contracts
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: PickleStaking
+    network: mainnet
+    source:
+      address: "0xD86F33388BF0bfDF0cCb1ECB4A48a1579504DC0a"
+      abi: Staking
+      startBlock: 10985000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - RewardAdded
+        - RewardPaid
+        - Staked
+        - Withdrawn
+      abis:
+        - name: Staking
+          file: PickleStaking/abis/Staking.json
+      eventHandlers:
+        - event: RewardAdded(uint256)
+          handler: handleRewardAdded
+        - event: RewardPaid(indexed address,uint256)
+          handler: handleRewardPaid
+        - event: Staked(indexed address,uint256)
+          handler: handleStaked
+        - event: Withdrawn(indexed address,uint256)
+          handler: handleWithdrawn
+      file: PickleStaking/PickleStaking.wasm
