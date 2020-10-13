@@ -9,8 +9,9 @@ type Jar @entity {
 
 type Account @entity {
   id: ID!
+  balance: BigInt!
   staked: BigInt!
-  totalRewards: BigInt!
+  stakingRewards: BigInt!
 }
 
 type JarBalance @entity {

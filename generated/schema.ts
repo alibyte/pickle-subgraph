@@ -118,6 +118,15 @@ export class Account extends Entity {
     this.set("id", Value.fromString(value));
   }
 
+  get balance(): BigInt {
+    let value = this.get("balance");
+    return value.toBigInt();
+  }
+
+  set balance(value: BigInt) {
+    this.set("balance", Value.fromBigInt(value));
+  }
+
   get staked(): BigInt {
     let value = this.get("staked");
     return value.toBigInt();
@@ -127,13 +136,13 @@ export class Account extends Entity {
     this.set("staked", Value.fromBigInt(value));
   }
 
-  get totalRewards(): BigInt {
-    let value = this.get("totalRewards");
+  get stakingRewards(): BigInt {
+    let value = this.get("stakingRewards");
     return value.toBigInt();
   }
 
-  set totalRewards(value: BigInt) {
-    this.set("totalRewards", Value.fromBigInt(value));
+  set stakingRewards(value: BigInt) {
+    this.set("stakingRewards", Value.fromBigInt(value));
   }
 }
 

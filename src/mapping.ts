@@ -42,19 +42,19 @@ export function handleRewardPaid(event: RewardPaid): void {
   rewards.save();
 
   let account = getOrCreateAccount(event.params.user);
-  account.totalRewards = account.totalRewards.plus(event.params.reward);
+  account.stakingRewards = account.stakingRewards.plus(event.params.reward);
   account.save();
 }
 
 export function handleStaked(event: Staked): void {
-  getRewards().save();
-  getOrCreateAccount(event.params.user).save();
+  let account = getOrCreateAccount(event.params.user);
+  account.staked = account.staked.plus(event.params.amount);
+  account.save();
 }
 
 export function handleWithdrawn(event: Withdrawn): void {
-  getRewards().save();
   let account = getOrCreateAccount(event.params.user);
-  account.totalRewards = account.totalRewards.plus(event.params.amount);
+  account.staked = account.staked.minus(event.params.amount);
   account.save();
 }
 
@@ -63,8 +63,9 @@ function getOrCreateAccount(address: Address): Account {
 
   if (account == null) {
     account = new Account(address.toHexString());
-    account.totalRewards = ZERO;
+    account.balance = ZERO;
     account.staked = ZERO;
+    account.stakingRewards = ZERO;
   }
 
   return account as Account;
@@ -83,10 +84,15 @@ function getOrCreateJar(address: Address): Jar {
   }
 
   jar.token = contract.token();
-  jar.ratio = contract.getRatio();
-  jar.jarBalance = contract.balance();
-  jar.totalSupply = contract.totalSupply();
-  jar.available = contract.available();
+
+  let ratio = contract.try_getRatio();
+  let balance = contract.try_balance();
+  let totalSupply = contract.try_totalSupply();
+  let available = contract.try_available();
+  jar.ratio = !ratio.reverted ? ratio.value : jar.ratio;
+  jar.jarBalance = !balance.reverted ? balance.value : jar.jarBalance;
+  jar.totalSupply = !totalSupply.reverted ? totalSupply.value : jar.totalSupply;
+  jar.available = !available.reverted ? available.value : jar.available;
 
   return jar as Jar
 }
