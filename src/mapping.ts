@@ -6,14 +6,28 @@ import {
   Staked,
   Withdrawn
 } from "../generated/staking/StakingContract"
-import { Account, RewardContract } from "../generated/schema"
+import { UniswapLPJar, Transfer } from "../generated/usdcethlp/UniswapLPJar"
+import { Account, Jar, RewardContract } from "../generated/schema"
 
 // static values
+const NO_ADDR = "0x0000000000000000000000000000000000000000";
 let ZERO = BigInt.fromI32(0);
 
-// contract definitions
-let stakingContractAddress = "0xd86f33388bf0bfdf0ccb1ecb4a48a1579504dc0a";
-let stakingContract = StakingContract.bind(Address.fromString(stakingContractAddress));
+export function handleTransfer(event: Transfer): void {
+  let jar = getOrCreateJar(event.address);
+  let from = getOrCreateAccount(event.params.from);
+  let to = getOrCreateAccount(event.params.to);
+
+  // deposit
+  if (event.params.from.toHexString() == NO_ADDR) {
+  }
+
+  // withdrawal
+  if (event.params.to.toHexString() == NO_ADDR) {
+  }
+
+  jar.save();
+}
 
 export function handleRewardAdded(event: RewardAdded): void {
   let rewards = getRewards();
@@ -40,7 +54,7 @@ export function handleStaked(event: Staked): void {
 export function handleWithdrawn(event: Withdrawn): void {
   getRewards().save();
   let account = getOrCreateAccount(event.params.user);
-  account.totalRewards = stakingContract.earned(event.params.user).plus(account.totalRewards);
+  account.totalRewards = account.totalRewards.plus(event.params.amount);
   account.save();
 }
 
@@ -50,21 +64,42 @@ function getOrCreateAccount(address: Address): Account {
   if (account == null) {
     account = new Account(address.toHexString());
     account.totalRewards = ZERO;
+    account.staked = ZERO;
   }
 
-  account.staked = stakingContract.balanceOf(address);
   return account as Account;
 }
 
-function getRewards(): RewardContract {
-  let rewards = RewardContract.load(stakingContractAddress);
+function getOrCreateJar(address: Address): Jar {
+  let jar = Jar.load(address.toHexString());
+  let contract = UniswapLPJar.bind(address);
 
-  if (rewards == null) {
-    rewards = new RewardContract(stakingContractAddress);
-    rewards.totalRewards = ZERO;
-    rewards.currentRewards = ZERO;
+  if (jar == null) {
+    jar = new Jar(address.toHexString());
+    jar.ratio = ZERO;
+    jar.jarBalance = ZERO;
+    jar.totalSupply = ZERO;
+    jar.available = ZERO;
   }
 
-  rewards.stakedTokens = stakingContract.totalSupply();
+  jar.token = contract.token();
+  jar.ratio = contract.getRatio();
+  jar.jarBalance = contract.balance();
+  jar.totalSupply = contract.totalSupply();
+  jar.available = contract.available();
+
+  return jar as Jar
+}
+
+function getRewards(): RewardContract {
+  let rewards = RewardContract.load(NO_ADDR);
+
+  if (rewards == null) {
+    rewards = new RewardContract(NO_ADDR);
+    rewards.totalRewards = ZERO;
+    rewards.currentRewards = ZERO;
+    rewards.stakedTokens = ZERO;
+  }
+
   return rewards as RewardContract;
 }

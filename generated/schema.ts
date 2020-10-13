@@ -12,6 +12,82 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
+export class Jar extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Jar entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Jar entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Jar", id.toString(), this);
+  }
+
+  static load(id: string): Jar | null {
+    return store.get("Jar", id) as Jar | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get token(): Bytes {
+    let value = this.get("token");
+    return value.toBytes();
+  }
+
+  set token(value: Bytes) {
+    this.set("token", Value.fromBytes(value));
+  }
+
+  get ratio(): BigInt {
+    let value = this.get("ratio");
+    return value.toBigInt();
+  }
+
+  set ratio(value: BigInt) {
+    this.set("ratio", Value.fromBigInt(value));
+  }
+
+  get jarBalance(): BigInt {
+    let value = this.get("jarBalance");
+    return value.toBigInt();
+  }
+
+  set jarBalance(value: BigInt) {
+    this.set("jarBalance", Value.fromBigInt(value));
+  }
+
+  get totalSupply(): BigInt {
+    let value = this.get("totalSupply");
+    return value.toBigInt();
+  }
+
+  set totalSupply(value: BigInt) {
+    this.set("totalSupply", Value.fromBigInt(value));
+  }
+
+  get available(): BigInt {
+    let value = this.get("available");
+    return value.toBigInt();
+  }
+
+  set available(value: BigInt) {
+    this.set("available", Value.fromBigInt(value));
+  }
+}
+
 export class Account extends Entity {
   constructor(id: string) {
     super();
@@ -58,6 +134,37 @@ export class Account extends Entity {
 
   set totalRewards(value: BigInt) {
     this.set("totalRewards", Value.fromBigInt(value));
+  }
+}
+
+export class JarBalance extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save JarBalance entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save JarBalance entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("JarBalance", id.toString(), this);
+  }
+
+  static load(id: string): JarBalance | null {
+    return store.get("JarBalance", id) as JarBalance | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
   }
 }
 

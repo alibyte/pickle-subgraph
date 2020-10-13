@@ -1,7 +1,20 @@
+type Jar @entity {
+  id: ID!
+  token: Bytes!
+  ratio: BigInt!
+  jarBalance: BigInt!
+  totalSupply: BigInt!
+  available: BigInt!
+}
+
 type Account @entity {
   id: ID!
   staked: BigInt!
   totalRewards: BigInt!
+}
+
+type JarBalance @entity {
+  id: ID!
 }
 
 type RewardContract @entity {

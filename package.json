@@ -5,12 +5,12 @@
     "codegen": "graph codegen",
     "build": "graph build",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ axejintao/Pickle",
-    "create-local": "graph create --node http://localhost:8020/ axejintao/Pickle",
+    "create-local": "graph create --node http://10.0.0.113:8545/ axejintao/Pickle",
     "remove-local": "graph remove --node http://localhost:8020/ axejintao/Pickle",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 axejintao/Pickle"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.18.0",
-    "@graphprotocol/graph-ts": "0.18.0"
+    "@graphprotocol/graph-ts": "^0.18.1"
   }
 }
