@@ -79,17 +79,12 @@ function getOrCreateJar(address: Address): Jar {
     jar = new Jar(address.toHexString());
     jar.token = Address.fromString(NO_ADDR);
     jar.totalSupply = ZERO;
-    jar.tokenSupply = ZERO;
   }
 
   let token = contract.try_token();
   let totalSupply = contract.try_totalSupply();
   jar.token = !token.reverted ? token.value : jar.token;
   jar.totalSupply = !totalSupply.reverted ? totalSupply.value : jar.totalSupply;
-
-  let pair = UniV2Pair.bind(Address.fromString(jar.token.toHexString()));
-  let tokenSupply = pair.try_totalSupply();
-  jar.tokenSupply = !tokenSupply.reverted ? tokenSupply.value : jar.tokenSupply;
 
   return jar as Jar
 }
