@@ -6,7 +6,7 @@ import {
   Withdrawn
 } from "../generated/staking/StakingContract"
 import { UniswapLPJar, Transfer } from "../generated/usdcethlp/UniswapLPJar"
-import { UniswapPool } from "../generated/usdcethlp/UniswapPool"
+import { UniV2Pair } from "../generated/wbtcethlp/UniV2Pair"
 import { Account, Jar, RewardContract } from "../generated/schema"
 
 // static values
@@ -78,23 +78,18 @@ function getOrCreateJar(address: Address): Jar {
   if (jar == null) {
     jar = new Jar(address.toHexString());
     jar.token = Address.fromString(NO_ADDR);
-    jar.ratio = ZERO;
-    jar.jarBalance = ZERO;
     jar.totalSupply = ZERO;
-    jar.available = ZERO;
+    jar.tokenSupply = ZERO;
   }
 
   let token = contract.try_token();
-  let ratio = contract.try_getRatio();
-  let balance = contract.try_balance();
   let totalSupply = contract.try_totalSupply();
-  let available = contract.try_available();
-
   jar.token = !token.reverted ? token.value : jar.token;
-  jar.ratio = !ratio.reverted ? ratio.value : jar.ratio;
-  jar.jarBalance = !balance.reverted ? balance.value : jar.jarBalance;
   jar.totalSupply = !totalSupply.reverted ? totalSupply.value : jar.totalSupply;
-  jar.available = !available.reverted ? available.value : jar.available;
+
+  let pair = UniV2Pair.bind(Address.fromString(jar.token.toHexString()));
+  let tokenSupply = pair.try_totalSupply();
+  jar.tokenSupply = !tokenSupply.reverted ? tokenSupply.value : jar.tokenSupply;
 
   return jar as Jar
 }

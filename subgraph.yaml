@@ -32,69 +32,69 @@ dataSources:
         - event: Withdrawn(indexed address,uint256)
           handler: handleWithdrawn
       file: ./src/mapping.ts
-  - kind: ethereum/contract
-    name: usdcethlp
-    network: mainnet
-    source:
-      address: "0x53Bf2E62fA20e2b4522f05de3597890Ec1b352C6"
-      abi: UniswapLPJar
-      startBlock: 10960599
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      entities:
-        - Approval
-        - Transfer
-      abis:
-        - name: UniswapLPJar
-          file: ./abis/PickleJar.json
-      eventHandlers:
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-      file: ./src/mapping.ts
-  - kind: ethereum/contract
-    name: usdtethlp
-    network: mainnet
-    source:
-      address: "0x09FC573c502037B149ba87782ACC81cF093EC6ef"
-      abi: UniswapLPJar
-      startBlock: 10960612
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      entities:
-        - Approval
-        - Transfer
-      abis:
-        - name: UniswapLPJar
-          file: ./abis/PickleJar.json
-      eventHandlers:
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-      file: ./src/mapping.ts
-  - kind: ethereum/contract
-    name: daiethlp
-    network: mainnet
-    source:
-      address: "0xCffA068F1E44D98D3753966eBd58D4CFe3BB5162"
-      abi: UniswapLPJar
-      startBlock: 10960588
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      entities:
-        - Approval
-        - Transfer
-      abis:
-        - name: UniswapLPJar
-          file: ./abis/PickleJar.json
-      eventHandlers:
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-      file: ./src/mapping.ts
+  # - kind: ethereum/contract
+  #   name: usdcethlp
+  #   network: mainnet
+  #   source:
+  #     address: "0x53Bf2E62fA20e2b4522f05de3597890Ec1b352C6"
+  #     abi: UniswapLPJar
+  #     startBlock: 10960599
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.4
+  #     language: wasm/assemblyscript
+  #     entities:
+  #       - Approval
+  #       - Transfer
+  #     abis:
+  #       - name: UniswapLPJar
+  #         file: ./abis/PickleJar.json
+  #     eventHandlers:
+  #       - event: Transfer(indexed address,indexed address,uint256)
+  #         handler: handleTransfer
+  #     file: ./src/mapping.ts
+  # - kind: ethereum/contract
+  #   name: usdtethlp
+  #   network: mainnet
+  #   source:
+  #     address: "0x09FC573c502037B149ba87782ACC81cF093EC6ef"
+  #     abi: UniswapLPJar
+  #     startBlock: 10960612
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.4
+  #     language: wasm/assemblyscript
+  #     entities:
+  #       - Approval
+  #       - Transfer
+  #     abis:
+  #       - name: UniswapLPJar
+  #         file: ./abis/PickleJar.json
+  #     eventHandlers:
+  #       - event: Transfer(indexed address,indexed address,uint256)
+  #         handler: handleTransfer
+  #     file: ./src/mapping.ts
+  # - kind: ethereum/contract
+  #   name: daiethlp
+  #   network: mainnet
+  #   source:
+  #     address: "0xCffA068F1E44D98D3753966eBd58D4CFe3BB5162"
+  #     abi: UniswapLPJar
+  #     startBlock: 10960588
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.4
+  #     language: wasm/assemblyscript
+  #     entities:
+  #       - Approval
+  #       - Transfer
+  #     abis:
+  #       - name: UniswapLPJar
+  #         file: ./abis/PickleJar.json
+  #     eventHandlers:
+  #       - event: Transfer(indexed address,indexed address,uint256)
+  #         handler: handleTransfer
+  #     file: ./src/mapping.ts
   - kind: ethereum/contract
     name: wbtcethlp
     network: mainnet
@@ -112,6 +112,8 @@ dataSources:
       abis:
         - name: UniswapLPJar
           file: ./abis/PickleJar.json
+        - name: UniV2Pair
+          file: ./abis/UniV2Pair.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer

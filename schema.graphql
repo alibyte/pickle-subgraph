@@ -1,10 +1,8 @@
 type Jar @entity {
   id: ID!
   token: Bytes!
-  ratio: BigInt!
-  jarBalance: BigInt!
   totalSupply: BigInt!
-  available: BigInt!
+  tokenSupply: BigInt!
 }
 
 type Account @entity {
