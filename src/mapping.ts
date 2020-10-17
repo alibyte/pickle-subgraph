@@ -26,7 +26,6 @@ export function handleTransfer(event: Transfer): void {
   if (event.params.to.toHexString() == NO_ADDR) {
   }
 
-  jar.timestamp = event.block.timestamp;
   jar.save();
 }
 
@@ -83,10 +82,6 @@ function getOrCreateJar(address: Address): Jar {
     jar.jarBalance = ZERO;
     jar.totalSupply = ZERO;
     jar.available = ZERO;
-    jar.tokenZero = Address.fromString(NO_ADDR);
-    jar.tokenOne = Address.fromString(NO_ADDR);
-    jar.tokenZeroCumulative = ZERO;
-    jar.tokenOneCumulative = ZERO;
   }
 
   let token = contract.try_token();
@@ -100,17 +95,6 @@ function getOrCreateJar(address: Address): Jar {
   jar.jarBalance = !balance.reverted ? balance.value : jar.jarBalance;
   jar.totalSupply = !totalSupply.reverted ? totalSupply.value : jar.totalSupply;
   jar.available = !available.reverted ? available.value : jar.available;
-
-  let pool = UniswapPool.bind(Address.fromString(jar.token.toHexString()));
-  let tokenZero = pool.try_token0();
-  let tokenOne = pool.try_token0();
-  let tokenZeroCumulative = pool.try_price0CumulativeLast();
-  let tokenOneCumulative = pool.try_price1CumulativeLast();
-
-  jar.tokenZero = !tokenZero.reverted ? tokenZero.value : jar.tokenZero;
-  jar.tokenOne = !tokenOne.reverted ? tokenOne.value : jar.tokenOne;
-  jar.tokenZeroCumulative = !tokenZeroCumulative.reverted ? tokenZeroCumulative.value : jar.tokenZeroCumulative;
-  jar.tokenOneCumulative = !tokenOneCumulative.reverted ? tokenOneCumulative.value : jar.tokenOneCumulative;
 
   return jar as Jar
 }

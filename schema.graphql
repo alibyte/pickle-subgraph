@@ -5,11 +5,6 @@ type Jar @entity {
   jarBalance: BigInt!
   totalSupply: BigInt!
   available: BigInt!
-  tokenZero: Bytes!
-  tokenOne: Bytes!
-  tokenZeroCumulative: BigInt!
-  tokenOneCumulative: BigInt!
-  timestamp: BigInt!
 }
 
 type Account @entity {
@@ -17,10 +12,6 @@ type Account @entity {
   balance: BigInt!
   staked: BigInt!
   stakingRewards: BigInt!
-}
-
-type JarBalance @entity {
-  id: ID!
 }
 
 type RewardContract @entity {
