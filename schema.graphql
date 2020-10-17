@@ -5,6 +5,11 @@ type Jar @entity {
   jarBalance: BigInt!
   totalSupply: BigInt!
   available: BigInt!
+  tokenZero: Bytes!
+  tokenOne: Bytes!
+  tokenZeroCumulative: BigInt!
+  tokenOneCumulative: BigInt!
+  timestamp: BigInt!
 }
 
 type Account @entity {

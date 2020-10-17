@@ -1,12 +1,12 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts"
 import {
-  StakingContract,
   RewardAdded,
   RewardPaid,
   Staked,
   Withdrawn
 } from "../generated/staking/StakingContract"
 import { UniswapLPJar, Transfer } from "../generated/usdcethlp/UniswapLPJar"
+import { UniswapPool } from "../generated/usdcethlp/UniswapPool"
 import { Account, Jar, RewardContract } from "../generated/schema"
 
 // static values
@@ -26,6 +26,7 @@ export function handleTransfer(event: Transfer): void {
   if (event.params.to.toHexString() == NO_ADDR) {
   }
 
+  jar.timestamp = event.block.timestamp;
   jar.save();
 }
 
@@ -77,22 +78,39 @@ function getOrCreateJar(address: Address): Jar {
 
   if (jar == null) {
     jar = new Jar(address.toHexString());
+    jar.token = Address.fromString(NO_ADDR);
     jar.ratio = ZERO;
     jar.jarBalance = ZERO;
     jar.totalSupply = ZERO;
     jar.available = ZERO;
+    jar.tokenZero = Address.fromString(NO_ADDR);
+    jar.tokenOne = Address.fromString(NO_ADDR);
+    jar.tokenZeroCumulative = ZERO;
+    jar.tokenOneCumulative = ZERO;
   }
 
-  jar.token = contract.token();
-
+  let token = contract.try_token();
   let ratio = contract.try_getRatio();
   let balance = contract.try_balance();
   let totalSupply = contract.try_totalSupply();
   let available = contract.try_available();
+
+  jar.token = !token.reverted ? token.value : jar.token;
   jar.ratio = !ratio.reverted ? ratio.value : jar.ratio;
   jar.jarBalance = !balance.reverted ? balance.value : jar.jarBalance;
   jar.totalSupply = !totalSupply.reverted ? totalSupply.value : jar.totalSupply;
   jar.available = !available.reverted ? available.value : jar.available;
+
+  let pool = UniswapPool.bind(Address.fromString(jar.token.toHexString()));
+  let tokenZero = pool.try_token0();
+  let tokenOne = pool.try_token0();
+  let tokenZeroCumulative = pool.try_price0CumulativeLast();
+  let tokenOneCumulative = pool.try_price1CumulativeLast();
+
+  jar.tokenZero = !tokenZero.reverted ? tokenZero.value : jar.tokenZero;
+  jar.tokenOne = !tokenOne.reverted ? tokenOne.value : jar.tokenOne;
+  jar.tokenZeroCumulative = !tokenZeroCumulative.reverted ? tokenZeroCumulative.value : jar.tokenZeroCumulative;
+  jar.tokenOneCumulative = !tokenOneCumulative.reverted ? tokenOneCumulative.value : jar.tokenOneCumulative;
 
   return jar as Jar
 }

@@ -49,6 +49,8 @@ dataSources:
       abis:
         - name: UniswapLPJar
           file: ./abis/PickleJar.json
+        - name: UniswapPool
+          file: ./abis/UniswapPool.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
@@ -70,6 +72,8 @@ dataSources:
       abis:
         - name: UniswapLPJar
           file: ./abis/PickleJar.json
+        - name: UniswapPool
+          file: ./abis/UniswapPool.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
@@ -91,6 +95,8 @@ dataSources:
       abis:
         - name: UniswapLPJar
           file: ./abis/PickleJar.json
+        - name: UniswapPool
+          file: ./abis/UniswapPool.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
@@ -112,6 +118,8 @@ dataSources:
       abis:
         - name: UniswapLPJar
           file: ./abis/PickleJar.json
+        - name: UniswapPool
+          file: ./abis/UniswapPool.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
