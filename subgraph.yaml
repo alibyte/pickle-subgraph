@@ -32,33 +32,13 @@ dataSources:
         - event: Withdrawn(indexed address,uint256)
           handler: handleWithdrawn
       file: ./src/mapping.ts
+  
   - kind: ethereum/contract
-    name: usdcethlp
-    network: mainnet
-    source:
-      address: "0x53Bf2E62fA20e2b4522f05de3597890Ec1b352C6"
-      abi: UniswapLPJar
-      startBlock: 10960599
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      entities:
-        - Approval
-        - Transfer
-      abis:
-        - name: UniswapLPJar
-          file: ./abis/PickleJar.json
-      eventHandlers:
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-      file: ./src/mapping.ts
-  - kind: ethereum/contract
-    name: usdcethlpv1
+    name: USDCv1
     network: mainnet
     source:
       address: "0x46206E9BDaf534d057be5EcF231DaD2A1479258B"
-      abi: UniswapLPJar
+      abi: PickleJar
       startBlock: 10883082
     mapping:
       kind: ethereum/events
@@ -68,39 +48,19 @@ dataSources:
         - Approval
         - Transfer
       abis:
-        - name: UniswapLPJar
+        - name: PickleJar
           file: ./abis/PickleJar.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
       file: ./src/mapping.ts
+  
   - kind: ethereum/contract
-    name: usdtethlp
-    network: mainnet
-    source:
-      address: "0x09FC573c502037B149ba87782ACC81cF093EC6ef"
-      abi: UniswapLPJar
-      startBlock: 10960612
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      entities:
-        - Approval
-        - Transfer
-      abis:
-        - name: UniswapLPJar
-          file: ./abis/PickleJar.json
-      eventHandlers:
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-      file: ./src/mapping.ts
-  - kind: ethereum/contract
-    name: usdtethlpv1
+    name: USDTv1
     network: mainnet
     source:
       address: "0x3a41AB1e362169974132dEa424Fb8079Fd0E94d8"
-      abi: UniswapLPJar
+      abi: PickleJar
       startBlock: 10882948
     mapping:
       kind: ethereum/events
@@ -110,39 +70,19 @@ dataSources:
         - Approval
         - Transfer
       abis:
-        - name: UniswapLPJar
+        - name: PickleJar
           file: ./abis/PickleJar.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
       file: ./src/mapping.ts
+  
   - kind: ethereum/contract
-    name: daiethlp
-    network: mainnet
-    source:
-      address: "0xCffA068F1E44D98D3753966eBd58D4CFe3BB5162"
-      abi: UniswapLPJar
-      startBlock: 10960588
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      entities:
-        - Approval
-        - Transfer
-      abis:
-        - name: UniswapLPJar
-          file: ./abis/PickleJar.json
-      eventHandlers:
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-      file: ./src/mapping.ts
-  - kind: ethereum/contract
-    name: daiethlpv1
+    name: DAIv1
     network: mainnet
     source:
       address: "0xf79Ae82DCcb71ca3042485c85588a3E0C395D55b"
-      abi: UniswapLPJar
+      abi: PickleJar
       startBlock: 10882533
     mapping:
       kind: ethereum/events
@@ -152,18 +92,85 @@ dataSources:
         - Approval
         - Transfer
       abis:
-        - name: UniswapLPJar
+        - name: PickleJar
           file: ./abis/PickleJar.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
       file: ./src/mapping.ts
+  
   - kind: ethereum/contract
-    name: wbtcethlp
+    name: USDCv2
+    network: mainnet
+    source:
+      address: "0x53Bf2E62fA20e2b4522f05de3597890Ec1b352C6"
+      abi: PickleJar
+      startBlock: 10960599
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - Transfer
+      abis:
+        - name: PickleJar
+          file: ./abis/PickleJar.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts
+  
+  - kind: ethereum/contract
+    name: USDTv2
+    network: mainnet
+    source:
+      address: "0x09FC573c502037B149ba87782ACC81cF093EC6ef"
+      abi: PickleJar
+      startBlock: 10960612
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - Transfer
+      abis:
+        - name: PickleJar
+          file: ./abis/PickleJar.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts
+  
+  - kind: ethereum/contract
+    name: DAIv2
+    network: mainnet
+    source:
+      address: "0xCffA068F1E44D98D3753966eBd58D4CFe3BB5162"
+      abi: PickleJar
+      startBlock: 10960588
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - Transfer
+      abis:
+        - name: PickleJar
+          file: ./abis/PickleJar.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts
+  
+  - kind: ethereum/contract
+    name: WBTCv1
     network: mainnet
     source:
       address: "0xc80090AA05374d336875907372EE4ee636CBC562"
-      abi: UniswapLPJar
+      abi: PickleJar
       startBlock: 11010902
     mapping:
       kind: ethereum/events
@@ -173,9 +180,120 @@ dataSources:
         - Approval
         - Transfer
       abis:
-        - name: UniswapLPJar
+        - name: PickleJar
           file: ./abis/PickleJar.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
       file: ./src/mapping.ts
+  
+  - kind: ethereum/contract
+    name: sCRVv1
+    network: mainnet
+    source:
+      address: "0x2385d31f1eb3736be0c3629e6f03c4b3cd997ffd"
+      abi: PickleJar
+      startBlock: 10863877
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - Transfer
+      abis:
+        - name: PickleJar
+          file: ./abis/PickleJar.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts
+  
+  - kind: ethereum/contract
+    name: sCRVv2
+    network: mainnet
+    source:
+      address: "0x68d14d66B2B0d6E157c06Dc8Fefa3D8ba0e66a89"
+      abi: PickleJar
+      startBlock: 10960581
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - Transfer
+      abis:
+        - name: PickleJar
+          file: ./abis/PickleJar.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts
+  
+  - kind: ethereum/contract
+    name: 3CRVv1
+    network: mainnet
+    source:
+      address: "0x1BB74b5DdC1f4fC91D6f9E7906cf68bc93538e33"
+      abi: PickleJar
+      startBlock: 11010885
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - Transfer
+      abis:
+        - name: PickleJar
+          file: ./abis/PickleJar.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts
+  
+  - kind: ethereum/contract
+    name: renBTCCRVv1
+    network: mainnet
+    source:
+      address: "0x2E35392F4c36EBa7eCAFE4de34199b2373Af22ec"
+      abi: PickleJar
+      startBlock: 11010898
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - Transfer
+      abis:
+        - name: PickleJar
+          file: ./abis/PickleJar.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts
+  
+  - kind: ethereum/contract
+    name: cDAIv1
+    network: mainnet
+    source:
+      address: "0x6949Bb624E8e8A90F87cD2058139fcd77D2F3F87"
+      abi: PickleJar
+      startBlock: 11044218
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - Transfer
+      abis:
+        - name: PickleJar
+          file: ./abis/PickleJar.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts
+  

@@ -5,8 +5,7 @@ import {
   Staked,
   Withdrawn
 } from "../generated/staking/StakingContract"
-import { UniswapLPJar, Transfer } from "../generated/usdcethlp/UniswapLPJar"
-import { UniV2Pair } from "../generated/wbtcethlp/UniV2Pair"
+import { PickleJar, Transfer } from "../generated/sCRVv1/PickleJar"
 import { Account, Jar, RewardContract } from "../generated/schema"
 
 // static values
@@ -73,7 +72,7 @@ function getOrCreateAccount(address: Address): Account {
 
 function getOrCreateJar(address: Address): Jar {
   let jar = Jar.load(address.toHexString());
-  let contract = UniswapLPJar.bind(address);
+  let contract = PickleJar.bind(address);
 
   if (jar == null) {
     jar = new Jar(address.toHexString());
