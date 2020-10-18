@@ -22,6 +22,8 @@ dataSources:
       abis:
         - name: StakingContract
           file: ./abis/StakingContract.json
+        - name: ERC20
+          file: ./abis/ERC20.json
       eventHandlers:
         - event: RewardAdded(uint256)
           handler: handleRewardAdded

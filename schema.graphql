@@ -1,6 +1,7 @@
 type Jar @entity {
   id: ID!
   token: Bytes!
+  balance: BigInt!
   totalSupply: BigInt!
 }
 
@@ -16,4 +17,6 @@ type RewardContract @entity {
   currentRewards: BigInt!
   totalRewards: BigInt!
   stakedTokens: BigInt!
+  stakingToken: Bytes!
+  stakingTokenTotalSupply: BigInt!
 }
