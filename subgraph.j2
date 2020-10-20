@@ -33,7 +33,7 @@ dataSources:
           handler: handleStaked
         - event: Withdrawn(indexed address,uint256)
           handler: handleWithdrawn
-      file: ./src/mapping.ts
+      file: ./src/staking.ts
   {% for contract in contracts %}
   - kind: ethereum/contract
     name: {{ contract.name }}
@@ -55,5 +55,5 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mapping.ts
+      file: ./src/jars.ts
   {% endfor %}

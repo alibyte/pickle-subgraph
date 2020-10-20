@@ -33,7 +33,7 @@ dataSources:
           handler: handleStaked
         - event: Withdrawn(indexed address,uint256)
           handler: handleWithdrawn
-      file: ./src/mapping.ts
+      file: ./src/staking.ts
   
   - kind: ethereum/contract
     name: USDCv1
@@ -55,7 +55,7 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mapping.ts
+      file: ./src/jars.ts
   
   - kind: ethereum/contract
     name: USDTv1
@@ -77,7 +77,7 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mapping.ts
+      file: ./src/jars.ts
   
   - kind: ethereum/contract
     name: DAIv1
@@ -99,7 +99,7 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mapping.ts
+      file: ./src/jars.ts
   
   - kind: ethereum/contract
     name: USDCv2
@@ -121,7 +121,7 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mapping.ts
+      file: ./src/jars.ts
   
   - kind: ethereum/contract
     name: USDTv2
@@ -143,7 +143,7 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mapping.ts
+      file: ./src/jars.ts
   
   - kind: ethereum/contract
     name: DAIv2
@@ -165,7 +165,7 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mapping.ts
+      file: ./src/jars.ts
   
   - kind: ethereum/contract
     name: WBTCv1
@@ -187,7 +187,7 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mapping.ts
+      file: ./src/jars.ts
   
   - kind: ethereum/contract
     name: sCRVv1
@@ -209,7 +209,7 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mapping.ts
+      file: ./src/jars.ts
   
   - kind: ethereum/contract
     name: sCRVv2
@@ -231,7 +231,7 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mapping.ts
+      file: ./src/jars.ts
   
   - kind: ethereum/contract
     name: 3CRVv1
@@ -253,7 +253,7 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mapping.ts
+      file: ./src/jars.ts
   
   - kind: ethereum/contract
     name: renBTCCRVv1
@@ -275,7 +275,7 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mapping.ts
+      file: ./src/jars.ts
   
   - kind: ethereum/contract
     name: cDAIv1
@@ -297,5 +297,5 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mapping.ts
+      file: ./src/jars.ts
   
