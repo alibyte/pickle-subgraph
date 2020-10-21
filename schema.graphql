@@ -5,11 +5,23 @@ type Jar @entity {
   totalSupply: BigInt!
 }
 
-type Account @entity {
+type User @entity {
   id: ID!
+  jarBalances: [UserJarBalance!]! @derivedFrom(field: "user")
+
   balance: BigInt!
   staked: BigInt!
   stakingRewards: BigInt!
+}
+
+type UserJarBalance @entity {
+  id: ID!
+  jar: Jar!
+  user: User!
+
+  netDeposit: BigInt!
+  grossDeposit: BigInt!
+  grossWithdraw: BigInt!
 }
 
 type RewardContract @entity {

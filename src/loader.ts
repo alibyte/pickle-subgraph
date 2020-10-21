@@ -1,21 +1,37 @@
 import { Address, BigInt } from '@graphprotocol/graph-ts';
-import { Account, Jar, RewardContract } from '../generated/schema';
+import { User, Jar, RewardContract, UserJarBalance } from '../generated/schema';
 import { StakingContract } from '../generated/staking/StakingContract'
 import { PickleJar } from '../generated/sCRVv1/PickleJar'
 import { ERC20 } from '../generated/staking/ERC20'
 import { ZERO, NO_ADDR, STAKING_CONTRACT } from './constants';
 
-export function getOrCreateAccount(address: Address): Account {
-  let account = Account.load(address.toHexString());
+export function getOrCreateUser(address: Address): User {
+  let user = User.load(address.toHexString());
 
-  if (account == null) {
-    account = new Account(address.toHexString());
-    account.balance = ZERO;
-    account.staked = ZERO;
-    account.stakingRewards = ZERO;
+  if (user == null) {
+    user = new User(address.toHexString());
+    user.balance = ZERO;
+    user.staked = ZERO;
+    user.stakingRewards = ZERO;
   }
 
-  return account as Account;
+  return user as User;
+}
+
+export const getOrCreateUserJarBalance = (user: User, jar: Jar): UserJarBalance => {
+  let jarBalanceId = user.id.concat('-').concat(jar.id);
+  let jarBalance = UserJarBalance.load(jarBalanceId);
+
+  if (jarBalance == null) {
+    jarBalance = new UserJarBalance(jarBalanceId);
+    jarBalance.jar = jar.id;
+    jarBalance.user = user.id;
+    jarBalance.netDeposit = ZERO;
+    jarBalance.grossDeposit = ZERO;
+    jarBalance.grossWithdraw = ZERO;
+  }
+  
+  return jarBalance as UserJarBalance;
 }
 
 export function getOrCreateJar(address: Address): Jar {
@@ -36,7 +52,7 @@ export function getOrCreateJar(address: Address): Jar {
   jar.balance = !balance.reverted ? balance.value : jar.balance;
   jar.totalSupply = !totalSupply.reverted ? totalSupply.value : jar.totalSupply;
 
-  return jar as Jar
+  return jar as Jar;
 }
 
 export function getRewards(): RewardContract {
