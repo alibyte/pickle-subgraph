@@ -1,8 +1,21 @@
 type Jar @entity {
   id: ID!
+  "Jar name"
+  name: String!
+  "Share token"
+  symbol: String!
+  "Deposit token"
   token: Bytes!
+  "Deposit token per share"
+  ratio: BigInt!
+  "Shares outstanding"
   balance: BigInt!
+  "Deposit tokens outstanding"
   totalSupply: BigInt!
+
+  netDeposit: BigInt!
+  grossDeposit: BigInt!
+  grossWithdraw: BigInt!
 }
 
 type User @entity {
@@ -31,4 +44,8 @@ type RewardContract @entity {
   stakedTokens: BigInt!
   stakingToken: Bytes!
   stakingTokenTotalSupply: BigInt!
+}
+
+type Strategy @entity {
+  id: ID!
 }

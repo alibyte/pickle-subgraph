@@ -41,14 +41,25 @@ export function getOrCreateJar(address: Address): Jar {
   if (jar == null) {
     jar = new Jar(address.toHexString());
     jar.token = Address.fromString(NO_ADDR);
+    jar.ratio = ZERO;
+    jar.netDeposit = ZERO;
+    jar.grossDeposit = ZERO;
+    jar.grossWithdraw = ZERO;
+
     jar.balance = ZERO;
     jar.totalSupply = ZERO;
   }
 
+  let name = contract.try_name();
+  let symbol = contract.try_symbol();
   let token = contract.try_token();
+  let ratio = contract.try_getRatio();
   let balance = contract.try_balance();
   let totalSupply = contract.try_totalSupply();
+  jar.name = !name.reverted ? name.value : jar.name;
+  jar.symbol = !symbol.reverted ? symbol.value : jar.symbol;
   jar.token = !token.reverted ? token.value : jar.token;
+  jar.ratio = !ratio.reverted ? ratio.value : jar.ratio;
   jar.balance = !balance.reverted ? balance.value : jar.balance;
   jar.totalSupply = !totalSupply.reverted ? totalSupply.value : jar.totalSupply;
 
