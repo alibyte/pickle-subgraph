@@ -1,5 +1,5 @@
 import { Address, BigInt } from '@graphprotocol/graph-ts';
-import { User, Jar, RewardContract, UserJarBalance } from '../generated/schema';
+import { User, Jar, RewardContract, UserJarBalance, Token } from '../generated/schema';
 import { StakingContract } from '../generated/staking/StakingContract'
 import { PickleJar } from '../generated/sCRVv1/PickleJar'
 import { ERC20 } from '../generated/staking/ERC20'
@@ -40,14 +40,12 @@ export function getOrCreateJar(address: Address): Jar {
 
   if (jar == null) {
     jar = new Jar(address.toHexString());
-    jar.token = Address.fromString(NO_ADDR);
     jar.ratio = ZERO;
+    jar.balance = ZERO;
+    jar.totalSupply = ZERO;
     jar.netDeposit = ZERO;
     jar.grossDeposit = ZERO;
     jar.grossWithdraw = ZERO;
-
-    jar.balance = ZERO;
-    jar.totalSupply = ZERO;
   }
 
   let name = contract.try_name();
@@ -58,7 +56,7 @@ export function getOrCreateJar(address: Address): Jar {
   let totalSupply = contract.try_totalSupply();
   jar.name = !name.reverted ? name.value : jar.name;
   jar.symbol = !symbol.reverted ? symbol.value : jar.symbol;
-  jar.token = !token.reverted ? token.value : jar.token;
+  jar.token = !token.reverted ? getOrCreateToken(token.value).id : jar.token;
   jar.ratio = !ratio.reverted ? ratio.value : jar.ratio;
   jar.balance = !balance.reverted ? balance.value : jar.balance;
   jar.totalSupply = !totalSupply.reverted ? totalSupply.value : jar.totalSupply;
@@ -90,3 +88,25 @@ export function getRewards(): RewardContract {
 
   return rewards as RewardContract;
 }
+
+export function getOrCreateToken(address: Address): Token {
+  let token = Token.load(address.toHexString());
+
+  if (token == null) {
+    token = new Token(address.toHexString());
+  }
+
+  let tokenContract = ERC20.bind(address);
+  let decimals = tokenContract.try_decimals();
+  let name = tokenContract.try_name();
+  let owner = tokenContract.try_owner();
+  let symbol = tokenContract.try_symbol();
+  let totalSupply = tokenContract.try_totalSupply();
+  token.decimals = !decimals.reverted ? BigInt.fromI32(decimals.value) : token.decimals;
+  token.name = !name.reverted ? name.value : token.name;
+  token.owner = !owner.reverted ? owner.value : token.owner;
+  token.symbol = !symbol.reverted ? symbol.value : token.symbol;
+  token.totalSupply = !totalSupply.reverted ? totalSupply.value : token.totalSupply;
+
+  return token as Token;
+};
