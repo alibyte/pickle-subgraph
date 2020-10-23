@@ -1,7 +1,8 @@
 {
-  "name": "Pickle",
+  "name": "pickle",
   "license": "UNLICENSED",
   "scripts": {
+    "template": "python3 subgraph.py",
     "codegen": "graph codegen",
     "build": "graph build",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ axejintao/Pickle",

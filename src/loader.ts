@@ -99,12 +99,10 @@ export function getOrCreateToken(address: Address): Token {
   let tokenContract = ERC20.bind(address);
   let decimals = tokenContract.try_decimals();
   let name = tokenContract.try_name();
-  let owner = tokenContract.try_owner();
   let symbol = tokenContract.try_symbol();
   let totalSupply = tokenContract.try_totalSupply();
   token.decimals = !decimals.reverted ? BigInt.fromI32(decimals.value) : token.decimals;
   token.name = !name.reverted ? name.value : token.name;
-  token.owner = !owner.reverted ? owner.value : token.owner;
   token.symbol = !symbol.reverted ? symbol.value : token.symbol;
   token.totalSupply = !totalSupply.reverted ? totalSupply.value : token.totalSupply;
 

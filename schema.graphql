@@ -50,7 +50,6 @@ type Token @entity {
   id: ID!
   decimals: BigInt!
   name: String!
-  owner: Bytes!
   symbol: String!
   totalSupply: BigInt!
 }
