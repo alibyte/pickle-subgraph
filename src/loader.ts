@@ -93,18 +93,18 @@ export function getOrCreateToken(address: Address): Token {
   let token = Token.load(address.toHexString());
 
   if (token == null) {
-    token = new Token(address.toHexString());
-  }
+    let tokenContract = ERC20.bind(address);
+    let decimals = tokenContract.try_decimals();
+    let name = tokenContract.try_name();
+    let symbol = tokenContract.try_symbol();
+    let totalSupply = tokenContract.try_totalSupply();
 
-  let tokenContract = ERC20.bind(address);
-  let decimals = tokenContract.try_decimals();
-  let name = tokenContract.try_name();
-  let symbol = tokenContract.try_symbol();
-  let totalSupply = tokenContract.try_totalSupply();
-  token.decimals = !decimals.reverted ? BigInt.fromI32(decimals.value) : token.decimals;
-  token.name = !name.reverted ? name.value : token.name;
-  token.symbol = !symbol.reverted ? symbol.value : token.symbol;
-  token.totalSupply = !totalSupply.reverted ? totalSupply.value : token.totalSupply;
+    token = new Token(address.toHexString());
+    token.decimals = !decimals.reverted ? BigInt.fromI32(decimals.value) : token.decimals;
+    token.name = !name.reverted ? name.value : token.name;
+    token.symbol = !symbol.reverted ? symbol.value : token.symbol;
+    token.totalSupply = !totalSupply.reverted ? totalSupply.value : token.totalSupply;
+  }
 
   return token as Token;
 };
