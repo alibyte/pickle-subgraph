@@ -40,6 +40,9 @@ export function getOrCreateJar(address: Address): Jar {
 
   if (jar == null) {
     jar = new Jar(address.toHexString());
+    jar.name = "";
+    jar.symbol = "";
+    jar.token = "";
     jar.ratio = ZERO;
     jar.balance = ZERO;
     jar.totalSupply = ZERO;
@@ -104,6 +107,7 @@ export function getOrCreateToken(address: Address): Token {
     token.name = !name.reverted ? name.value : token.name;
     token.symbol = !symbol.reverted ? symbol.value : token.symbol;
     token.totalSupply = !totalSupply.reverted ? totalSupply.value : token.totalSupply;
+    token.save();
   }
 
   return token as Token;
