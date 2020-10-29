@@ -12,8 +12,6 @@ type Jar @entity {
   balance: BigInt!
   "Deposit tokens outstanding"
   totalSupply: BigInt!
-  "Time of jar snapshot"
-  timestamp: BigInt!
 
   netDeposit: BigInt!
   grossDeposit: BigInt!
@@ -46,8 +44,6 @@ type RewardContract @entity {
   stakedTokens: BigInt!
   stakingToken: Bytes!
   stakingTokenTotalSupply: BigInt!
-  "Time of reward snapshot"
-  timestamp: BigInt!
 }
 
 type Token @entity {

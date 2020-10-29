@@ -35,7 +35,7 @@ dataSources:
           handler: handleWithdrawn
       file: ./src/staking.ts
   - kind: ethereum/contract
-    name: staking
+    name: stakingv2
     network: mainnet
     source:
       address: "0xa17a8883dA1aBd57c690DF9Ebf58fC194eDAb66F"
