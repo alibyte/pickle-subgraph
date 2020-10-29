@@ -32,14 +32,12 @@ export function handleStaked(event: Staked): void {
   let account = getOrCreateUser(event.params.user);
   account.staked = account.staked.plus(event.params.amount);
   account.save();
-  let rewards = getRewards();
-  rewards.save();
+  getRewards().save();
 }
 
 export function handleWithdrawn(event: Withdrawn): void {
   let account = getOrCreateUser(event.params.user);
   account.staked = account.staked.minus(event.params.amount);
   account.save();
-  let rewards = getRewards();
-  rewards.save();
+  getRewards().save();
 }

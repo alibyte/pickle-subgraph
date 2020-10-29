@@ -32,7 +32,5 @@ export function handleTransfer(event: Transfer): void {
 
   to.save();
   from.save();
-
-  jar.timestamp = event.block.timestamp;
   jar.save();
 }
