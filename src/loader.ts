@@ -46,6 +46,7 @@ export function getOrCreateJar(address: Address): Jar {
     jar.ratio = ZERO;
     jar.balance = ZERO;
     jar.totalSupply = ZERO;
+    jar.timestamp = ZERO;
     jar.netDeposit = ZERO;
     jar.grossDeposit = ZERO;
     jar.grossWithdraw = ZERO;

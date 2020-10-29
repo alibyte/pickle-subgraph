@@ -15,12 +15,14 @@ export function handleRewardAdded(event: RewardAdded): void {
   let rewards = getRewards();
   rewards.currentRewards = rewards.currentRewards.plus(event.params.reward);
   rewards.totalRewards = rewards.totalRewards.plus(event.params.reward);
+  rewards.timestamp = event.block.timestamp;
   rewards.save();
 }
 
 export function handleRewardPaid(event: RewardPaid): void {
   let rewards = getRewards();
   rewards.currentRewards = rewards.currentRewards.minus(event.params.reward);
+  rewards.timestamp = event.block.timestamp;
   rewards.save();
 
   let account = getOrCreateUser(event.params.user);
@@ -32,12 +34,16 @@ export function handleStaked(event: Staked): void {
   let account = getOrCreateUser(event.params.user);
   account.staked = account.staked.plus(event.params.amount);
   account.save();
-  getRewards().save();
+  let rewards = getRewards();
+  rewards.timestamp = event.block.timestamp;
+  rewards.save();
 }
 
 export function handleWithdrawn(event: Withdrawn): void {
   let account = getOrCreateUser(event.params.user);
   account.staked = account.staked.minus(event.params.amount);
   account.save();
-  getRewards().save();
+  let rewards = getRewards();
+  rewards.timestamp = event.block.timestamp;
+  rewards.save();
 }
