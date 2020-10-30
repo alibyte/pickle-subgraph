@@ -3,7 +3,7 @@ import { User, Jar, RewardContract, UserJarBalance, Token } from '../generated/s
 import { StakingContract } from '../generated/staking/StakingContract'
 import { PickleJar } from '../generated/sCRVv1/PickleJar'
 import { ERC20 } from '../generated/staking/ERC20'
-import { ZERO, NO_ADDR, STAKING_CONTRACT } from './constants';
+import { ZERO, NO_ADDR } from './constants';
 
 export function getOrCreateUser(address: Address): User {
   let user = User.load(address.toHexString());
@@ -67,12 +67,12 @@ export function getOrCreateJar(address: Address): Jar {
   return jar as Jar;
 }
 
-export function getRewards(): RewardContract {
-  let rewards = RewardContract.load(STAKING_CONTRACT);
-  let contract = StakingContract.bind(Address.fromString(STAKING_CONTRACT));
+export function getRewards(address: Address): RewardContract {
+  let rewards = RewardContract.load(address.toHexString());
+  let contract = StakingContract.bind(address);
 
   if (rewards == null) {
-    rewards = new RewardContract(STAKING_CONTRACT);
+    rewards = new RewardContract(address.toHexString());
     rewards.totalRewards = ZERO;
     rewards.currentRewards = ZERO;
     rewards.stakedTokens = ZERO;
